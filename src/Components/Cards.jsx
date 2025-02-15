@@ -5,13 +5,13 @@ import { useEffect } from 'react';
 
 function Cards(props) {
   const catagory =props.catagory;
-  const data = props.data;  
-  const Development=data.data.Development;
+  const data = props.courses;  
+  const Development=data.Development;
   const [likedCourses,setLikedCourses]=useState([]);
-  const [newData,setNewData]=useState([]);
+  // const [newData,setNewData]=useState([]);
   // console.log("data in Cards ",data);
-  // console.log("Keys in data:", Object.keys(data));
-  console.log("Development:", Development);
+  // // console.log("Keys in data:", Object.keys(data));
+  // console.log("Development:", Development);
 
 
 
@@ -20,36 +20,25 @@ function Cards(props) {
   //   getCourses();
   // },[catagory]);
 
-  useEffect(() => {
-    function getCourses() {
-      let newData = [];
-      if (!data) {
-        return newData;
+  function getCourse(){
+    if(catagory==="All"){
+      const newData=[];
+      for(let key in data){
+        newData.push(...data[key]);
       }
-      // console.log("Category:", catagory);
-      // console.log("Data:", data);
-      if (catagory === "All") {
-        newData = [
-          ...(data.data.business || []),
-          ...(data.data.development || []),
-          ...(data.data.design || []),
-          ...(data.data.lifestyle || [])
-        ];
-      } else {
-        newData = data.data[catagory] || [];
-      }
-      setNewData(newData);
+      return newData;
     }
-
-    getCourses();
-  }, [catagory, data]);
-  console.log("data in newdata",newData);
+    else {
+      return data[catagory];
+    }
+  }
+  // console.log("data in newdata",newData);
 
   return (
-    <div>
+    <div className='grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5 p-5 '>
       {
-        newData.map((course) => (
-          <Card key={course.id} course={course} />
+        getCourse().map((course) => (
+          <Card key={course.id} course={course} likedCourses={likedCourses} setLikedCourses={setLikedCourses} />
         ))
       }
     </div>

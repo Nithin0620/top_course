@@ -33,12 +33,15 @@ function App() {
   useEffect(() => {
     FetchUrl(url);
   }, []);
+  console.log("insiide app");
   console.log("data", data);
 
   return (
-    <div>
+    <div className='flex flex-col  bg-slate-700 min-h-screen height-screen'>
       <Navbar />
-      <Filter dataList={dataList} data={data} catagory={catagory} setCatagory={setCatagory} />
+      <Filter dataList={dataList} data={data} catagory={catagory} setCatagory={setCatagory} 
+       />
+      
       {
         loading ? <Spinner/> : <Cards courses={data} catagory={catagory} />
       }
